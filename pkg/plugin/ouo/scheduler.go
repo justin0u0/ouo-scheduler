@@ -49,6 +49,6 @@ func comparePodQOS(pod1, pod2 *v1.Pod) bool {
 // New ... Create an scheduler instance
 // New() is type PluginFactory = func(configuration runtime.Object, f v1alpha1.FrameworkHandle) (v1alpha1.Plugin, error)
 // mentioned in https://github.com/kubernetes/kubernetes/blob/master/pkg/scheduler/framework/runtime/registry.go
-func New(_ runtime.Object, _ framework.FrameworkHandle) (framework.Plugin, error) {
+func New(_ *runtime.Unknown, _ framework.FrameworkHandle) (framework.Plugin, error) {
 	return &CustomScheduler{}, nil
 }
