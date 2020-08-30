@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hello
+spec:
+  parallelism: 10
+  completions: 10
+  template:
+    metadata:
+      labels:
+        podGroup: "Hello"
+        groupPriority: "100"
+        minAvaliable: "2"
+    spec:
+      schedulerName: ouo-scheduler
+      containers:
+        - name: hello
+          image:  riyazhu/testprogram:cpu
+          # Best-Effort
+          # resources:
+          #   requests:
+          #     cpu: 1101m
+          #     memory: 262144k
+          #   limits:
+          #     cpu: 1101m
+          #     memory: 262144k
+      restartPolicy: Never

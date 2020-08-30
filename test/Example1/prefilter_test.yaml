@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: nginx
+spec:
+  parallelism: 2
+  completions: 2
+  template:
+    metadata:
+      labels:
+        app: nginx
+        podGroup: nginx
+        minAvailable: "3"
+    spec:
+      schedulerName: ouo-scheduler
+      containers:
+        - name: nginx
+          image:  nginx
+          resources:
+            requests:
+              cpu: 3000m
+              memory: 500Mi
+            limits:
+              cpu: 3000m
+              memory: 500Mi
+      restartPolicy: Never
+

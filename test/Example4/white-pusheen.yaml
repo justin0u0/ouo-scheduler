@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: white-pusheen
+spec:
+  parallelism: 10
+  completions: 10
+  template:
+    metadata:
+      labels:
+        podGroup: "Pusheen"
+        groupPriority: "100"
+        minAvaliable: "2"
+    spec:
+      schedulerName: ouo-scheduler
+      containers:
+        - name: white-pusheen
+          image:  riyazhu/testprogram:cpu
+          # Guaranteed
+          resources:
+            requests:
+              cpu: 1101m
+              memory: 262144k
+            limits:
+              cpu: 1101m
+              memory: 262144k
+      restartPolicy: Never
+     
+

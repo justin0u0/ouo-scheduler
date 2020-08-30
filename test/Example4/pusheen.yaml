@@ -1,0 +1,300 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: black-pusheen01
+  labels:
+    podGroup: "pusheen"
+    groupPriority: "100"
+    minAvaliable: "2"
+spec:
+  schedulerName: ouo-scheduler
+  containers:
+  - name: black-pusheen01
+    image: riyazhu/testprogram:cpu
+    # BestEffort
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gray-pusheen01
+  labels:
+    podGroup: "pusheen"
+    groupPriority: "100"
+    minAvaliable: "2"
+spec:
+  schedulerName: ouo-scheduler
+  containers:
+  - name: gray-pusheen01
+    image: riyazhu/testprogram:cpu
+    # Burstable
+    resources:
+      requests:
+        cpu: 500m
+        memory: 10000k
+      limits:
+        cpu: 1101m
+        memory: 262144k
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: white-pusheen01
+  labels:
+    podGroup: "pusheen"
+    groupPriority: "100"
+    minAvaliable: "2"
+spec:
+  schedulerName: ouo-scheduler
+  containers:
+  - name: white-pusheen01
+    image: riyazhu/testprogram:cpu
+    # Guaranteed
+    resources:
+      requests:
+        cpu: 1101m
+        memory: 262144k
+      limits:
+        cpu: 1101m
+        memory: 262144k
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: black-pusheen02
+  labels:
+    podGroup: "pusheen"
+    groupPriority: "100"
+    minAvaliable: "2"
+spec:
+  schedulerName: ouo-scheduler
+  containers:
+  - name: black-pusheen02
+    image: riyazhu/testprogram:cpu
+    # BestEffort
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: white-pusheen02
+  labels:
+    podGroup: "pusheen"
+    groupPriority: "100"
+    minAvaliable: "2"
+spec:
+  schedulerName: ouo-scheduler
+  containers:
+  - name: white-pusheen02
+    image: riyazhu/testprogram:cpu
+    # Guaranteed
+    resources:
+      requests:
+        cpu: 1101m
+        memory: 262144k
+      limits:
+        cpu: 1101m
+        memory: 262144k
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gray-pusheen02
+  labels:
+    podGroup: "pusheen"
+    groupPriority: "100"
+    minAvaliable: "2"
+spec:
+  schedulerName: ouo-scheduler
+  containers:
+  - name: gray-pusheen02
+    image: riyazhu/testprogram:cpu
+    # Burstable
+    resources:
+      requests:
+        cpu: 500m
+        memory: 10000k
+      limits:
+        cpu: 1101m
+        memory: 262144k
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: black-pusheen03
+  labels:
+    podGroup: "pusheen"
+    groupPriority: "100"
+    minAvaliable: "2"
+spec:
+  schedulerName: ouo-scheduler
+  containers:
+  - name: black-pusheen03
+    image: riyazhu/testprogram:cpu
+    # BestEffort
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: white-pusheen03
+  labels:
+    podGroup: "pusheen"
+    groupPriority: "100"
+    minAvaliable: "2"
+spec:
+  schedulerName: ouo-scheduler
+  containers:
+  - name: white-pusheen03
+    image: riyazhu/testprogram:cpu
+    # Guaranteed
+    resources:
+      requests:
+        cpu: 1101m
+        memory: 262144k
+      limits:
+        cpu: 1101m
+        memory: 262144k
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gray-pusheen03
+  labels:
+    podGroup: "pusheen"
+    groupPriority: "100"
+    minAvaliable: "2"
+spec:
+  schedulerName: ouo-scheduler
+  containers:
+  - name: gray-pusheen03
+    image: riyazhu/testprogram:cpu
+    # Burstable
+    resources:
+      requests:
+        cpu: 500m
+        memory: 10000k
+      limits:
+        cpu: 1101m
+        memory: 262144k
+---
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: black-pusheen04
+  labels:
+    podGroup: "pusheen"
+    groupPriority: "100"
+    minAvaliable: "2"
+spec:
+  schedulerName: ouo-scheduler
+  containers:
+  - name: black-pusheen04
+    image: riyazhu/testprogram:cpu
+    # BestEffort
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: white-pusheen04
+  labels:
+    podGroup: "pusheen"
+    groupPriority: "100"
+    minAvaliable: "2"
+spec:
+  schedulerName: ouo-scheduler
+  containers:
+  - name: white-pusheen04
+    image: riyazhu/testprogram:cpu
+    # Guaranteed
+    resources:
+      requests:
+        cpu: 1101m
+        memory: 262144k
+      limits:
+        cpu: 1101m
+        memory: 262144k
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gray-pusheen04
+  labels:
+    podGroup: "pusheen"
+    groupPriority: "100"
+    minAvaliable: "2"
+spec:
+  schedulerName: ouo-scheduler
+  containers:
+  - name: gray-pusheen04
+    image: riyazhu/testprogram:cpu
+    # Burstable
+    resources:
+      requests:
+        cpu: 500m
+        memory: 10000k
+      limits:
+        cpu: 1101m
+        memory: 262144k
+---
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: black-pusheen05
+  labels:
+    podGroup: "pusheen"
+    groupPriority: "100"
+    minAvaliable: "2"
+spec:
+  schedulerName: ouo-scheduler
+  containers:
+  - name: black-pusheen05
+    image: riyazhu/testprogram:cpu
+    # BestEffort
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: white-pusheen05
+  labels:
+    podGroup: "pusheen"
+    groupPriority: "100"
+    minAvaliable: "2"
+spec:
+  schedulerName: ouo-scheduler
+  containers:
+  - name: white-pusheen05
+    image: riyazhu/testprogram:cpu
+    # Guaranteed
+    resources:
+      requests:
+        cpu: 1101m
+        memory: 262144k
+      limits:
+        cpu: 1101m
+        memory: 262144k
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gray-pusheen05
+  labels:
+    podGroup: "pusheen"
+    groupPriority: "100"
+    minAvaliable: "2"
+spec:
+  schedulerName: ouo-scheduler
+  containers:
+  - name: gray-pusheen05
+    image: riyazhu/testprogram:cpu
+    # Burstable
+    resources:
+      requests:
+        cpu: 500m
+        memory: 10000k
+      limits:
+        cpu: 1101m
+        memory: 262144k
+
+
+
+

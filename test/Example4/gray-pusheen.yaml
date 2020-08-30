@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: gray-pusheen
+spec:
+  parallelism: 10
+  completions: 10
+  template:
+    metadata:
+      labels:
+        podGroup: "Pusheen"
+        groupPriority: "100"
+        minAvaliable: "2"
+    spec:
+      schedulerName: ouo-scheduler
+      containers:
+        - name: gray-pusheen
+          image:  riyazhu/testprogram:cpu
+          # Burstable
+          resources:
+            requests:
+              cpu: 500m
+              memory: 10000k
+            limits:
+              cpu: 1101m
+              memory: 262144k
+      restartPolicy: Never
+     
