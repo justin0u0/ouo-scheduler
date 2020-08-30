@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello
+spec:
+  schedulerName: ouo-scheduler
+  containers:
+  - name: hello
+    image:  riyazhu/testprogram:cpu
+    # Best-Effort
+    # resources:
+    #   requests:
+    #     cpu: 1101m
+    #     memory: 262144k
+    #   limits:
+    #     cpu: 1101m
+    #     memory: 262144k
+  restartPolicy: Never
+  nodeSelector:
+    test: test
+

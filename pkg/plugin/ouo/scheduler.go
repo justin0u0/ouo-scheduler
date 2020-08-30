@@ -28,7 +28,13 @@ func (*CustomScheduler) Name() string {
 func (*CustomScheduler) Less(pInfo1, pInfo2 *framework.PodInfo) bool {
 	p1 := pod.GetPodPriority(pInfo1.Pod)
 	p2 := pod.GetPodPriority(pInfo2.Pod)
-	return (p1 > p2) || (p1 == p2 && comparePodQOS(pInfo1.Pod, pInfo2.Pod))
+
+	fmt.Printf("[LESS: ] %v %v\n", p1, p2)
+
+	compare := comparePodQOS(pInfo1.Pod, pInfo2.Pod)
+	fmt.Printf("[Compare: ] %v, %v\n", pInfo1.Pod.Name, pInfo2.Pod.Name)
+
+	return (p1 > p2) || (p1 == p2 && compare)
 }
 
 // As https://github.com/kubernetes/kubernetes/blob/master/pkg/scheduler/framework/v1alpha1/types.go,
@@ -40,7 +46,7 @@ func comparePodQOS(pod1, pod2 *v1.Pod) bool {
 	pod1QOS := qos.GetPodQOS(pod1)
 	pod2QOS := qos.GetPodQOS(pod2)
 
-	fmt.Printf("[QOS: ] %v %v\n", pod1QOS, pod2QOS)
+	fmt.Printf("[QOS: ] %v: %v, %v: %v\n", pod1.Name, pod1QOS, pod2.Name, pod2QOS)
 
 	if pod1QOS == v1.PodQOSGuaranteed {
 		return true

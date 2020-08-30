@@ -3,8 +3,8 @@ kind: Job
 metadata:
   name: hi
 spec:
-  parallelism: 3
-  completions: 3
+  parallelism: 10
+  completions: 10
   template:
     metadata:
       labels:
@@ -19,9 +19,9 @@ spec:
           # Guaranteed
           resources:
             requests:
-              cpu: 500m
+              cpu: 1101m
               memory: 262144k
             limits:
-              cpu: 500m
+              cpu: 1101m
               memory: 262144k
       restartPolicy: Never
