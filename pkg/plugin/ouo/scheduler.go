@@ -6,6 +6,8 @@ import (
 	"k8s.io/kubernetes/pkg/api/v1/pod"
 	"k8s.io/kubernetes/pkg/apis/core/v1/helper/qos"
 	framework "k8s.io/kubernetes/pkg/scheduler/framework/v1alpha1"
+
+	"fmt"
 )
 
 // Name ... the custom shceduler name
@@ -37,6 +39,9 @@ func (*CustomScheduler) Less(pInfo1, pInfo2 *framework.PodInfo) bool {
 func comparePodQOS(pod1, pod2 *v1.Pod) bool {
 	pod1QOS := qos.GetPodQOS(pod1)
 	pod2QOS := qos.GetPodQOS(pod2)
+
+	fmt.Printf("[QOS: ] %v %v\n", pod1QOS, pod2QOS)
+
 	if pod1QOS == v1.PodQOSGuaranteed {
 		return true
 	}
