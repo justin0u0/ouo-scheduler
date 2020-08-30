@@ -29,12 +29,9 @@ func (*CustomScheduler) Less(pInfo1, pInfo2 *framework.PodInfo) bool {
 	p1 := pod.GetPodPriority(pInfo1.Pod)
 	p2 := pod.GetPodPriority(pInfo2.Pod)
 
-	fmt.Printf("[LESS: ] %v %v\n", p1, p2)
+	fmt.Printf("[LESS: ] %v: %v, %v: %v\n", pInfo1.Pod.Name, p1, pInfo2.Pod.Name, p2)
 
-	compare := comparePodQOS(pInfo1.Pod, pInfo2.Pod)
-	fmt.Printf("[Compare: ] %v, %v\n", pInfo1.Pod.Name, pInfo2.Pod.Name)
-
-	return (p1 > p2) || (p1 == p2 && compare)
+	return (p1 > p2) || (p1 == p2 && comparePodQOS(pInfo1.Pod, pInfo2.Pod))
 }
 
 // As https://github.com/kubernetes/kubernetes/blob/master/pkg/scheduler/framework/v1alpha1/types.go,

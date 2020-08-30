@@ -10,12 +10,10 @@ spec:
     # Guaranteed
     resources:
       requests:
-        cpu: 3999m
+        cpu: 990m
         memory: 262144k
       limits:
-        cpu: 3999m
+        cpu: 990m
         memory: 262144k
   restartPolicy: Never
-  nodeSelector:
-    test: test
 

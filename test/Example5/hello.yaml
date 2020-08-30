@@ -16,6 +16,4 @@ spec:
     #     cpu: 1101m
     #     memory: 262144k
   restartPolicy: Never
-  nodeSelector:
-    test: test
 
