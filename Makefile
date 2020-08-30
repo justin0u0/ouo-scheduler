@@ -12,7 +12,10 @@ init:
 local: init
 	go build -o=${BIN_DIR}/ouo-scheduler ./cmd/scheduler
 
-image: init
+build-linux: init
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o=${BIN_DIR}/ouo-scheduler ./cmd/scheduler
+
+image: build-linux
 	docker build --no-cache . -t ouo-scheduler:${TAG}
 
 clean:
