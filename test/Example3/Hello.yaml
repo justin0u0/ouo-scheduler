@@ -10,7 +10,7 @@ spec:
       labels:
         podGroup: "Hello"
         groupPriority: "100"
-        minAvaliable: "2"
+        minAvailable: "2"
     spec:
       schedulerName: ouo-scheduler
       containers:
