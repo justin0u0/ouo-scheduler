@@ -18,9 +18,9 @@ spec:
           image:  riyazhu/testprogram:cpu
           resources:
             requests:
-              cpu: 1101m
+              cpu: 300m
               memory: 262144k
             limits:
-              cpu: 1101m
+              cpu: 300m
               memory: 262144k
       restartPolicy: Never

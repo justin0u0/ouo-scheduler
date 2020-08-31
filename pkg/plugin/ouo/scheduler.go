@@ -5,11 +5,11 @@ import (
 	"strconv"
 
 	v1 "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/klog"
 	"k8s.io/kubernetes/pkg/apis/core/v1/helper/qos"
 	framework "k8s.io/kubernetes/pkg/scheduler/framework/v1alpha1"
-	"k8s.io/kubernetes/pkg/scheduler/nodeinfo"
 )
 
 // Name ... the custom shceduler name
@@ -76,11 +76,6 @@ func comparePodQOS(pod1, pod2 *v1.Pod) bool {
 
 // PreFilter ... Implement PreFilterPlugin interface PreFilter()
 func (s *CustomScheduler) PreFilter(_ context.Context, _ *framework.CycleState, pod *v1.Pod) *framework.Status {
-	nodeInfos, err := s.handle.SnapshotSharedLister().NodeInfos().List()
-	if err != nil {
-		return framework.NewStatus(framework.Unschedulable, "Failed to pass pre filter, get nodeInfos failed.")
-	}
-
 	podGroup, podGroupExist := pod.Labels["podGroup"]
 	if !podGroupExist {
 		return framework.NewStatus(framework.Success, "Pass pre filter successfully, pod has no label podGroup.")
@@ -95,7 +90,7 @@ func (s *CustomScheduler) PreFilter(_ context.Context, _ *framework.CycleState, 
 		return framework.NewStatus(framework.Unschedulable, "Failed to pass pre filter, pod label minAvailable is not a valid number")
 	}
 
-	totalPodsInPodGroup := getTotalPodsByPodGroup(nodeInfos, pod.Namespace, podGroup)
+	totalPodsInPodGroup := s.getTotalPodsByPodGroup(pod.Namespace, podGroup)
 	if totalPodsInPodGroup < minAvailableNum {
 		klog.V(3).Infof("The count of PodGroup %v (%v) is less than minAvailable(%d) in PreFilter: %d", podGroup, pod.Name, minAvailableNum, totalPodsInPodGroup)
 		return framework.NewStatus(framework.Unschedulable, "Failed to pass pre filter, less than min available")
@@ -109,16 +104,14 @@ func (*CustomScheduler) PreFilterExtensions() framework.PreFilterExtensions {
 	return nil
 }
 
-func getTotalPodsByPodGroup(nodeInfos []*nodeinfo.NodeInfo, ns string, pg string) int {
-	total := 0
-	for _, nodeInfo := range nodeInfos {
-		for _, pod := range nodeInfo.Pods() {
-			if podGroup, ok := pod.Labels["podGroup"]; ok && podGroup == pg && pod.Namespace == ns {
-				total++
-			}
-		}
+func (s *CustomScheduler) getTotalPodsByPodGroup(ns string, pg string) int {
+	selector := labels.Set{"podGroup": pg}.AsSelector()
+	pods, err := s.handle.SharedInformerFactory().Core().V1().Pods().Lister().Pods(ns).List(selector)
+	if err != nil {
+		klog.Error(err)
+		return 0
 	}
-	return total
+	return len(pods)
 }
 
 // New ... Create an scheduler instance
