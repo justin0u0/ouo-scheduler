@@ -10,6 +10,7 @@ import (
 	"k8s.io/kubernetes/pkg/api/v1/pod"
 	"k8s.io/kubernetes/pkg/apis/core/v1/helper/qos"
 	framework "k8s.io/kubernetes/pkg/scheduler/framework/v1alpha1"
+	"k8s.io/kubernetes/pkg/scheduler/nodeinfo"
 )
 
 // Name ... the custom shceduler name
@@ -30,7 +31,7 @@ func (*CustomScheduler) Name() string {
 }
 
 // Less ... Implement QueueSortPlugin interface Less() @pkg/scheduler/framework/v1alpha1/interface.go
-func (*CustomScheduler) Less(pInfo1, pInfo2 *framework.QueuedPodInfo) bool {
+func (*CustomScheduler) Less(pInfo1, pInfo2 *framework.PodInfo) bool {
 	p1 := pod.GetPodPriority(pInfo1.Pod)
 	p2 := pod.GetPodPriority(pInfo2.Pod)
 
@@ -94,11 +95,11 @@ func (*CustomScheduler) PreFilterExtensions() framework.PreFilterExtensions {
 	return nil
 }
 
-func getTotalPodsByPodGroup(nodeInfos []*framework.NodeInfo, ns string, pg string) int {
+func getTotalPodsByPodGroup(nodeInfos []*nodeinfo.NodeInfo, ns string, pg string) int {
 	total := 0
 	for _, nodeInfo := range nodeInfos {
-		for _, podInfo := range nodeInfo.Pods {
-			if podGroup, ok := podInfo.Pod.Labels["podGroup"]; ok && podGroup == pg && podInfo.Pod.Namespace == ns {
+		for _, pod := range nodeInfo.Pods() {
+			if podGroup, ok := pod.Labels["podGroup"]; ok && podGroup == pg && pod.Namespace == ns {
 				total++
 			}
 		}
