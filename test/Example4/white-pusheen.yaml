@@ -19,11 +19,11 @@ spec:
           # Guaranteed
           resources:
             requests:
-              cpu: 1101m
-              memory: 262144k
+              cpu: 100m
+              memory: 16382k
             limits:
-              cpu: 1101m
-              memory: 262144k
+              cpu: 100m
+              memory: 16382k
       restartPolicy: Never
      
 

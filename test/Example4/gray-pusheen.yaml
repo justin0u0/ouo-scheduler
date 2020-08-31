@@ -19,10 +19,10 @@ spec:
           # Burstable
           resources:
             requests:
-              cpu: 500m
-              memory: 10000k
+              cpu: 50m
+              memory: 8196k
             limits:
-              cpu: 1101m
-              memory: 262144k
+              cpu: 100m
+              memory: 16382k
       restartPolicy: Never
      
