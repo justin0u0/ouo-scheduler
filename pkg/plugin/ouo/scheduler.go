@@ -91,6 +91,7 @@ func (s *CustomScheduler) PreFilter(_ context.Context, _ *framework.CycleState, 
 	}
 
 	totalPodsInPodGroup := s.getTotalPodsByPodGroup(pod.Namespace, podGroup)
+	klog.V(3).Infof("[prefilter] [Prefilter]: %v: %v", pod.Name, totalPodsInPodGroup)
 	if totalPodsInPodGroup < minAvailableNum {
 		klog.V(3).Infof("The count of PodGroup %v (%v) is less than minAvailable(%d) in PreFilter: %d", podGroup, pod.Name, minAvailableNum, totalPodsInPodGroup)
 		return framework.NewStatus(framework.Unschedulable, "Failed to pass pre filter, less than min available")
