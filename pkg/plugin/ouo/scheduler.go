@@ -7,7 +7,6 @@ import (
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/klog"
-	"k8s.io/kubernetes/pkg/api/v1/pod"
 	"k8s.io/kubernetes/pkg/apis/core/v1/helper/qos"
 	framework "k8s.io/kubernetes/pkg/scheduler/framework/v1alpha1"
 	"k8s.io/kubernetes/pkg/scheduler/nodeinfo"
@@ -32,12 +31,27 @@ func (*CustomScheduler) Name() string {
 
 // Less ... Implement QueueSortPlugin interface Less() @pkg/scheduler/framework/v1alpha1/interface.go
 func (*CustomScheduler) Less(pInfo1, pInfo2 *framework.PodInfo) bool {
-	p1 := pod.GetPodPriority(pInfo1.Pod)
-	p2 := pod.GetPodPriority(pInfo2.Pod)
+	p1 := getPodPriority(pInfo1.Pod)
+	p2 := getPodPriority(pInfo2.Pod)
 
 	klog.V(3).Infof("[queue sort] [Less]: %v: %v, %v: %v", pInfo1.Pod.Name, p1, pInfo2.Pod.Name, p2)
 
 	return (p1 > p2) || (p1 == p2 && comparePodQOS(pInfo1.Pod, pInfo2.Pod))
+}
+
+func getPodPriority(pod *v1.Pod) int {
+	podGroupPriority, ok := pod.Labels["groupPriority"]
+
+	if !ok {
+		// Assume that the default groupPriority is 0
+		return 0
+	}
+
+	podGroupPriorityNum, err := strconv.Atoi(podGroupPriority)
+	if err != nil {
+		return 0
+	}
+	return podGroupPriorityNum
 }
 
 // As https://github.com/kubernetes/kubernetes/blob/master/pkg/scheduler/framework/v1alpha1/types.go,
