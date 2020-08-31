@@ -16,6 +16,9 @@ data:
       queueSort:
         enabled:
         - name: "ouo-scheduler"
+      preFilter:
+        enabled:
+        - name: "ouo-scheduler"
     pluginConfig:
     - name: "ouo-scheduler"
       args: {"master": "master", "kubeconfig": "kubeconfig"}
@@ -45,7 +48,7 @@ spec:
           name: scheduler-config
       containers:
       - name: ouo-scheduler-pod
-        image: ouo-scheduler:596d736
+        image: ouo-scheduler:1e0880c
         imagePullPolicy: IfNotPresent
         args:
         - ouo-scheduler
