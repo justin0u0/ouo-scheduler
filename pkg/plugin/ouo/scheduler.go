@@ -110,7 +110,7 @@ func getTotalPodsByPodGroup(nodeInfos []*nodeinfo.NodeInfo, ns string, pg string
 // New ... Create an scheduler instance
 // New() is type PluginFactory = func(configuration runtime.Object, f v1alpha1.FrameworkHandle) (v1alpha1.Plugin, error)
 // mentioned in https://github.com/kubernetes/kubernetes/blob/master/pkg/scheduler/framework/runtime/registry.go
-func New(_ runtime.Object, handle framework.FrameworkHandle) (framework.Plugin, error) {
+func New(_ *runtime.Unknown, handle framework.FrameworkHandle) (framework.Plugin, error) {
 	return &CustomScheduler{
 		handle: handle,
 	}, nil
