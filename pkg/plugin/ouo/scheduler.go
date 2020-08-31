@@ -78,25 +78,29 @@ func comparePodQOS(pod1, pod2 *v1.Pod) bool {
 func (s *CustomScheduler) PreFilter(_ context.Context, _ *framework.CycleState, pod *v1.Pod) *framework.Status {
 	podGroup, podGroupExist := pod.Labels["podGroup"]
 	if !podGroupExist {
+		klog.V(3).Infof("[prefilter] [PreFilter]: Pod %v Pass pre filter successfully, pod has no label podGroup.", pod.Name)
 		return framework.NewStatus(framework.Success, "Pass pre filter successfully, pod has no label podGroup.")
 	}
 
 	minAvailable, minAvailableExist := pod.Labels["minAvailable"]
 	if !minAvailableExist {
+		klog.V(3).Infof("[prefilter] [PreFilter]: Pod %v Pass pre filter successfully, pod has no label minAvailable.", pod.Name)
 		return framework.NewStatus(framework.Success, "Pass pre filter successfully, pod has no label minAvailable.")
 	}
 	minAvailableNum, atoiErr := strconv.Atoi(minAvailable)
 	if atoiErr != nil {
+		klog.V(3).Infof("[prefilter] [PreFilter]: Pod %v Failed to pass pre filter, pod label minAvailable is not a valid number.", pod.Name)
 		return framework.NewStatus(framework.Unschedulable, "Failed to pass pre filter, pod label minAvailable is not a valid number")
 	}
 
 	totalPodsInPodGroup := s.getTotalPodsByPodGroup(pod.Namespace, podGroup)
-	klog.V(3).Infof("[prefilter] [Prefilter]: %v: %v", pod.Name, totalPodsInPodGroup)
+	klog.V(3).Infof("[prefilter] [PreFilter]: Pod %v total pods in pod group is %v.", pod.Name, totalPodsInPodGroup)
 	if totalPodsInPodGroup < minAvailableNum {
-		klog.V(3).Infof("The count of PodGroup %v (%v) is less than minAvailable(%d) in PreFilter: %d", podGroup, pod.Name, minAvailableNum, totalPodsInPodGroup)
+		klog.V(3).Infof("[prefilter] [PreFilter]: The count of PodGroup %v (%v) is less than minAvailable(%d) in PreFilter: %d", podGroup, pod.Name, minAvailableNum, totalPodsInPodGroup)
 		return framework.NewStatus(framework.Unschedulable, "Failed to pass pre filter, less than min available")
 	}
 
+	klog.V(3).Infof("[prefilter] [PreFilter]: Pod %v pass pre filter successfully", pod.Name)
 	return framework.NewStatus(framework.Success, "Pass pre filter successfully")
 }
 
