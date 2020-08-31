@@ -48,7 +48,7 @@ spec:
           name: scheduler-config
       containers:
       - name: ouo-scheduler-pod
-        image: ouo-scheduler:f709b1f
+        image: ouo-scheduler:ec15edd
         imagePullPolicy: IfNotPresent
         args:
         - ouo-scheduler

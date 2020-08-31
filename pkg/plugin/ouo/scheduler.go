@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	v1 "k8s.io/api/core/v1"
-	"k8s.io/apimachinery/pkg/labels"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/klog"
 	"k8s.io/kubernetes/pkg/apis/core/v1/helper/qos"
@@ -110,13 +110,20 @@ func (*CustomScheduler) PreFilterExtensions() framework.PreFilterExtensions {
 }
 
 func (s *CustomScheduler) getTotalPodsByPodGroup(ns string, pg string) int {
-	selector := labels.Set{"podGroup": pg}.AsSelector()
-	pods, err := s.handle.SharedInformerFactory().Core().V1().Pods().Lister().Pods(ns).List(selector)
+	podList, err := s.handle.ClientSet().CoreV1().Pods(ns).List(metav1.ListOptions{})
+
 	if err != nil {
-		klog.Error(err)
 		return 0
 	}
-	return len(pods)
+
+	total := 0
+	for _, pod := range podList.Items {
+		if podGroup, ok := pod.Labels["podGroup"]; ok && podGroup == pg {
+			total++
+		}
+	}
+
+	return total
 }
 
 // New ... Create an scheduler instance
