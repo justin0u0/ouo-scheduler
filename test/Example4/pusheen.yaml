@@ -29,10 +29,10 @@ spec:
     # Burstable
     resources:
       requests:
-        cpu: 50m
+        cpu: 100m
         memory: 8196k
       limits:
-        cpu: 100m
+        cpu: 500m
         memory: 16382k
 ---
 apiVersion: v1
@@ -51,10 +51,10 @@ spec:
     # Guaranteed
     resources:
       requests:
-        cpu: 100m
+        cpu: 500m
         memory: 16382k
       limits:
-        cpu: 100m
+        cpu: 500m
         memory: 16382k
 ---
 apiVersion: v1
@@ -88,10 +88,10 @@ spec:
     # Guaranteed
     resources:
       requests:
-        cpu: 100m
+        cpu: 500m
         memory: 16382k
       limits:
-        cpu: 100m
+        cpu: 500m
         memory: 16382k
 ---
 apiVersion: v1
@@ -110,10 +110,10 @@ spec:
     # Burstable
     resources:
       requests:
-        cpu: 50m
+        cpu: 100m
         memory: 8196k
       limits:
-        cpu: 100m
+        cpu: 500m
         memory: 16382k
 ---
 apiVersion: v1
@@ -147,10 +147,10 @@ spec:
     # Guaranteed
     resources:
       requests:
-        cpu: 100m
+        cpu: 500m
         memory: 16382k
       limits:
-        cpu: 100m
+        cpu: 500m
         memory: 16382k
 ---
 apiVersion: v1
@@ -169,10 +169,10 @@ spec:
     # Burstable
     resources:
       requests:
-        cpu: 50m
+        cpu: 100m
         memory: 8196k
       limits:
-        cpu: 100m
+        cpu: 500m
         memory: 16382k
 ---
 apiVersion: v1
@@ -206,10 +206,10 @@ spec:
     # Guaranteed
     resources:
       requests:
-        cpu: 100m
+        cpu: 500m
         memory: 16382k
       limits:
-        cpu: 100m
+        cpu: 500m
         memory: 16382k
 ---
 apiVersion: v1
@@ -228,10 +228,10 @@ spec:
     # Burstable
     resources:
       requests:
-        cpu: 50m
+        cpu: 100m
         memory: 8196k
       limits:
-        cpu: 100m
+        cpu: 500m
         memory: 16382k
 ---
 apiVersion: v1
@@ -265,10 +265,10 @@ spec:
     # Guaranteed
     resources:
       requests:
-        cpu: 100m
+        cpu: 500m
         memory: 16382k
       limits:
-        cpu: 100m
+        cpu: 500m
         memory: 16382k
 ---
 apiVersion: v1
@@ -287,9 +287,9 @@ spec:
     # Burstable
     resources:
       requests:
-        cpu: 50m
+        cpu: 100m
         memory: 8196k
       limits:
-        cpu: 100m
+        cpu: 500m
         memory: 16382k
 

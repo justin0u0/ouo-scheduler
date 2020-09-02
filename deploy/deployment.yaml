@@ -48,12 +48,12 @@ spec:
           name: scheduler-config
       containers:
       - name: ouo-scheduler-pod
-        image: justin0u0/ouo-scheduler:bf7936d
+        image: justin0u0/ouo-scheduler:9bedc1b
         imagePullPolicy: IfNotPresent
         args:
         - ouo-scheduler
         - --config=/scheduler/scheduler-config.yaml
-        - --v=1
+        - --v=3
         resources:
           requests:
             cpu: "50m"
