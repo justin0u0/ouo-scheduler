@@ -34,7 +34,7 @@ func (*CustomScheduler) Less(pInfo1, pInfo2 *framework.PodInfo) bool {
 	p1 := getPodPriority(pInfo1.Pod)
 	p2 := getPodPriority(pInfo2.Pod)
 
-	klog.V(3).Infof("[queue sort] [Less]: %v: %v, %v: %v", pInfo1.Pod.Name, p1, pInfo2.Pod.Name, p2)
+	klog.V(1).Infof("[queue sort] [Less]: %v: %v, %v: %v", pInfo1.Pod.Name, p1, pInfo2.Pod.Name, p2)
 
 	return (p1 > p2) || (p1 == p2 && comparePodQOS(pInfo1.Pod, pInfo2.Pod))
 }
@@ -63,7 +63,7 @@ func comparePodQOS(pod1, pod2 *v1.Pod) bool {
 	pod1QOS := qos.GetPodQOS(pod1)
 	pod2QOS := qos.GetPodQOS(pod2)
 
-	klog.V(3).Infof("[queue sort] [comparePodQOS]: %v: %v, %v, %v", pod1.Name, pod1QOS, pod2.Name, pod2QOS)
+	klog.V(1).Infof("[queue sort] [comparePodQOS]: %v: %v, %v, %v", pod1.Name, pod1QOS, pod2.Name, pod2QOS)
 
 	if pod1QOS == v1.PodQOSGuaranteed {
 		return true
@@ -78,29 +78,29 @@ func comparePodQOS(pod1, pod2 *v1.Pod) bool {
 func (s *CustomScheduler) PreFilter(_ context.Context, _ *framework.CycleState, pod *v1.Pod) *framework.Status {
 	podGroup, podGroupExist := pod.Labels["podGroup"]
 	if !podGroupExist {
-		klog.V(3).Infof("[prefilter] [PreFilter]: Pod %v Pass pre filter successfully, pod has no label podGroup.", pod.Name)
+		klog.V(1).Infof("[prefilter] [PreFilter]: Pod %v Pass pre filter successfully, pod has no label podGroup.", pod.Name)
 		return framework.NewStatus(framework.Success, "Pass pre filter successfully, pod has no label podGroup.")
 	}
 
 	minAvailable, minAvailableExist := pod.Labels["minAvailable"]
 	if !minAvailableExist {
-		klog.V(3).Infof("[prefilter] [PreFilter]: Pod %v Pass pre filter successfully, pod has no label minAvailable.", pod.Name)
+		klog.V(1).Infof("[prefilter] [PreFilter]: Pod %v Pass pre filter successfully, pod has no label minAvailable.", pod.Name)
 		return framework.NewStatus(framework.Success, "Pass pre filter successfully, pod has no label minAvailable.")
 	}
 	minAvailableNum, atoiErr := strconv.Atoi(minAvailable)
 	if atoiErr != nil {
-		klog.V(3).Infof("[prefilter] [PreFilter]: Pod %v Failed to pass pre filter, pod label minAvailable is not a valid number.", pod.Name)
+		klog.V(1).Infof("[prefilter] [PreFilter]: Pod %v Failed to pass pre filter, pod label minAvailable is not a valid number.", pod.Name)
 		return framework.NewStatus(framework.Unschedulable, "Failed to pass pre filter, pod label minAvailable is not a valid number")
 	}
 
 	totalPodsInPodGroup := s.getTotalPodsByPodGroup(pod.Namespace, podGroup)
-	klog.V(3).Infof("[prefilter] [PreFilter]: Pod %v total pods in pod group is %v.", pod.Name, totalPodsInPodGroup)
+	klog.V(1).Infof("[prefilter] [PreFilter]: Pod %v total pods in pod group is %v.", pod.Name, totalPodsInPodGroup)
 	if totalPodsInPodGroup < minAvailableNum {
-		klog.V(3).Infof("[prefilter] [PreFilter]: The count of PodGroup %v (%v) is less than minAvailable(%d) in PreFilter: %d", podGroup, pod.Name, minAvailableNum, totalPodsInPodGroup)
+		klog.V(1).Infof("[prefilter] [PreFilter]: The count of PodGroup %v (%v) is less than minAvailable(%d) in PreFilter: %d", podGroup, pod.Name, minAvailableNum, totalPodsInPodGroup)
 		return framework.NewStatus(framework.Unschedulable, "Failed to pass pre filter, less than min available")
 	}
 
-	klog.V(3).Infof("[prefilter] [PreFilter]: Pod %v pass pre filter successfully", pod.Name)
+	klog.V(1).Infof("[prefilter] [PreFilter]: Pod %v pass pre filter successfully", pod.Name)
 	return framework.NewStatus(framework.Success, "Pass pre filter successfully")
 }
 
