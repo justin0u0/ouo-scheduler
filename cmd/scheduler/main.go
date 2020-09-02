@@ -2,24 +2,24 @@ package main
 
 import (
   "fmt"
+  "math/rand"
   "os"
-	"math/rand"
-	"time"
+  "time"
 
+  "github.com/justin0u0/ouo-scheduler/pkg/plugin"
   "k8s.io/component-base/logs"
-	"github.com/justin0u0/ouo-scheduler/pkg/plugin"
 )
 
 func main() {
-	rand.Seed(time.Now().UnixNano())
+  rand.Seed(time.Now().UnixNano())
 
-	command := plugin.Register()
+  command := plugin.Register()
 
   logs.InitLogs()
   defer logs.FlushLogs()
 
-	if err := command.Execute(); err != nil {
+  if err := command.Execute(); err != nil {
     _, _ = fmt.Fprintf(os.Stderr, "%v\n", err)
     os.Exit(1)
-	}
+  }
 }
