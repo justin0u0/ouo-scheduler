@@ -6,9 +6,8 @@ Implement *QueueSort Plugin* and *PreFilter Plugin*.
 # Usage
 
 1. Build Docker image
-```
-make image
-```
-
+  ```
+  make image
+  ```
 2. Change `spec.image` inside `deploy/deployment.yaml`
 3. `kubectl apply -f deploy/.`
